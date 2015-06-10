@@ -1,6 +1,6 @@
-void mca2root(char* input=NULL, char* output=NULL)
+void mca2root(char* input, char* output)
 {
-   // create output file
+   // create output file to hold histograms
    TFile *fo = new TFile(output,"recreate");
 
    // define histogram for each channel
@@ -11,9 +11,7 @@ void mca2root(char* input=NULL, char* output=NULL)
       h[i] = new TH1I(Form("h%d",i),
             Form("Channel %d;ADC counts;Entries;",i),nbit,0,nbit);
 
-   // open input file
-   ifstream fi;
-   fi.open(input);
+   ifstream fi(input); // open input file
 
    // read input file line by line
    const int nc=256; // read 256 characters in each line
@@ -21,23 +19,21 @@ void mca2root(char* input=NULL, char* output=NULL)
    int icha=0, ibin=1; // counters
    bool isData=false; // flag
    while(fi.getline(line, nc)) { // get a line
-      if (line[0]=='B') { // meet the line started with 'BEGIN'
-         isData=true; // turn on flag
-         fi.getline(line, nc); // go to next line
-      }
-      if (line[0]=='E') isData=false;// meet line started with 'END'
+      if (line[0]=='E') isData=false;// meet lines starting with 'END'
       if (isData) {
          h[icha]->SetBinContent(ibin, atoi(line));
          ibin++;
-         if (ibin>nbit) { // finished one channel
+         if (ibin>nbit) { // finish one channel
             icha++;
             ibin=1;
          }
       }
+      if (line[0]=='B') isData=true; // meet lines starting with 'BEGIN'
    }
-   fi.close();
 
-   // write histograms to root file
+   fi.close(); // close input file
+
+   // save histograms to ouptut file
    fo->Write();
    fo->Close();
 }

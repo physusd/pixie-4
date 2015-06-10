@@ -1,6 +1,8 @@
+# Pixie-4
+
 Scripts to convert outputs from PIXIE Igor GUI to ROOT format
 
-# Convert Igor text file to ROOT format
+## Convert Igor text file to ROOT format
 
 1. Create Igor text file from the PIXIE MCA Spectrum GUI:
 ![How to create Igor text file from PIXIE MCA Spectrum GUI](https://dl.dropboxusercontent.com/u/19851056/0/PIXIE-MCA-Spectrum-save-as-Igor-text.png)

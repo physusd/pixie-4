@@ -1,6 +1,6 @@
 # Pixie-4
 
-Scripts to convert outputs from [Pixie-4] [GUI] to [ROOT] format
+Scripts to convert outputs from [Pixie-4][] [GUI] to [ROOT] format
 
 ## Download
 ```
